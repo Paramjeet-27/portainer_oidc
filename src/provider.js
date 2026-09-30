@@ -9,4 +9,8 @@ export const oidc = new Provider(config.issuer, {
   jwks,
   clients: config.clients,
   findAccount,
+  claims: config.claims,
+  pkce: {
+    required: () => true,
+  },
 });

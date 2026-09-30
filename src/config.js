@@ -18,4 +18,9 @@ export const config = {
       token_endpoint_auth_method: "client_secret_basic",
     },
   ],
+  claims: {
+    openid: ["sub"],
+    email: ["email", "email_verified"],
+    profile: ["name"],
+  },
 };
