@@ -8,7 +8,9 @@ if (!token) {
 
 const [header, payload, signature] = token.split(".");
 
-const res = await fetch("http://localhost:3000/jwks");
+const port = process.env.PORT || 3000;
+
+const res = await fetch(`http://localhost:${port}/jwks`);
 const { keys } = await res.json();
 const publicKey = createPublicKey({ key: keys[0], format: "jwk" });
 

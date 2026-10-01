@@ -8,11 +8,15 @@ export const config = {
   port,
   issuer: process.env.ISSUER || `http://localhost:${port}`,
   keysPath: path.join(root, "keys", "jwks.json"),
+  usersPath: path.join(root, "data", "users.json"),
   clients: [
     {
-      client_id: "test-client",
-      client_secret: "test-secret",
-      redirect_uris: ["https://oidcdebugger.com/debug"],
+      client_id: process.env.CLIENT_ID,
+      client_secret: process.env.CLIENT_SECRET,
+      redirect_uris: [
+        "https://oidcdebugger.com/debug",
+        "https://my-test-redirect.com",
+      ],
       response_types: ["code"],
       grant_types: ["authorization_code"],
       token_endpoint_auth_method: "client_secret_basic",
@@ -20,7 +24,7 @@ export const config = {
   ],
   claims: {
     openid: ["sub"],
-    email: ["email", "email_verified"],
-    profile: ["name"],
+    email: ["email"],
+    profile: ["name", "address", "email_verified"],
   },
 };

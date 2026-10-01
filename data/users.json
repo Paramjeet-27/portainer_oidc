@@ -1,0 +1,51 @@
+{
+  "deepak": {
+    "email": "deepak@dd.com",
+    "email_verified": true,
+    "name": "Deepak",
+    "address": {
+      "formatted": "123 Main St",
+      "street_address": "123 Main St",
+      "locality": "Noida",
+      "region": "UP",
+      "postal_code": "201301",
+      "country": "India"
+    }
+  },
+  "harsh": {
+    "email": "harsh@hh.com",
+    "email_verified": true,
+    "name": "Harsh"
+  },
+  "raghav": {
+    "email": "raghav@rr.com",
+    "email_verified": false,
+    "name": "Raghav",
+    "address": {
+      "formatted": "123 Main St",
+      "street_address": "123 Main St",
+      "locality": "Delhi",
+      "region": "DELHI",
+      "postal_code": "110045",
+      "country": "India"
+    }
+  },
+  "rohan": {
+    "email": "rohan@rr.com",
+    "email_verified": false,
+    "name": "Rohan"
+  },
+  "vivek": {
+    "email": "vivek@vv.com",
+    "email_verified": true,
+    "name": "Vivek",
+    "address": {
+      "formatted": "123 Main St",
+      "street_address": "123 Main St",
+      "locality": "Gurugram",
+      "region": "HARYANA",
+      "postal_code": "122022",
+      "country": "India"
+    }
+  }
+}

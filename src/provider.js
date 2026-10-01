@@ -10,7 +10,10 @@ export const oidc = new Provider(config.issuer, {
   clients: config.clients,
   findAccount,
   claims: config.claims,
+  // conformIdTokenClaims: false,
   pkce: {
     required: () => true,
   },
 });
+
+// if conformIdTokenClaims is 'false', the user info requested in claims will be added in id_token, else only sub will be added, default is 'true'

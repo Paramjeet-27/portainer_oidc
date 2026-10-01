@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { oidc } from "./provider.js";
 import { config } from "./config.js";
 

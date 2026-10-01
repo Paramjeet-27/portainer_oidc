@@ -1,19 +1,16 @@
-const users = {
-  "test-user": {
-    email: "test@example.com",
-    email_verified: true,
-    name: "Test User",
-  },
-};
+import { readFileSync } from "node:fs";
+import { config } from "./config.js";
 
-export async function findAccount(ctx, id) {
+const users = JSON.parse(readFileSync(config.usersPath, "utf8"));
+
+console.log("USERS...", users);
+
+export const findAccount = async (ctx, id) => {
   const user = users[id];
   if (!user) return undefined;
 
   return {
     accountId: id,
-    async claims() {
-      return { sub: id, ...user };
-    },
+    claims: async () => ({ sub: id, ...user }),
   };
-}
+};
