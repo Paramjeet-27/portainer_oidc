@@ -17,3 +17,34 @@ export const oidc = new Provider(config.issuer, {
 });
 
 // if conformIdTokenClaims is 'false', the user info requested in claims will be added in id_token, else only sub will be added, default is 'true'
+
+const EVENTS = [
+  "authorization.success",
+  "authorization.error",
+  "authorization_code.saved",
+  "authorization_code.consumed",
+  "grant.success",
+  "grant.error",
+  "userinfo.error",
+  "userinfo.success",
+  "server_error",
+];
+
+const logEvent = (event) => (ctx, err) => {
+  const parts = [`[${event}]`];
+
+  const client = ctx?.oidc?.client?.clientId;
+  if (client) parts.push(`client=${client}`);
+
+  const isError = event.endsWith("error");
+  if (isError && err) {
+    parts.push(
+      `${err.error || err.name}: ${err.error_description || err.message}`,
+    );
+    if (err.error_detail) parts.push(`| detail: ${err.error_detail}`);
+  }
+
+  (event.endsWith("error") ? console.error : console.log)(parts.join(" "));
+};
+
+for (const event of EVENTS) oidc.on(event, logEvent(event));
