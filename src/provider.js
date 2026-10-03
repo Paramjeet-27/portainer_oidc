@@ -1,4 +1,4 @@
-import Provider from "oidc-provider";
+import Provider, { errors } from "oidc-provider";
 import { readFileSync } from "node:fs";
 import { config } from "./config.js";
 import { findAccount } from "./accounts.js";
@@ -14,9 +14,28 @@ export const oidc = new Provider(config.issuer, {
   pkce: {
     required: () => true,
   },
+  features: {
+    resourceIndicators: {
+      // defaultResource: async () => config.apiResource,
+      getResourceServerInfo: async (ctx, resourceIndicator, client) => {
+        if (resourceIndicator !== config.apiResource) {
+          console.log("Resource URL mismatch. Throwing error...");
+          throw new errors.InvalidTarget();
+        }
+        console.log("Resource URL matched. Proceeding");
+        return {
+          scope: "api:read",
+          accessTokenFormat: "jwt",
+          accessTokenTTL: 3600,
+        };
+      },
+    },
+  },
 });
 
 // if conformIdTokenClaims is 'false', the user info requested in claims will be added in id_token, else only sub will be added, default is 'true'
+
+// logging events and errors
 
 const EVENTS = [
   "authorization.success",
@@ -26,7 +45,6 @@ const EVENTS = [
   "grant.success",
   "grant.error",
   "userinfo.error",
-  "userinfo.success",
   "server_error",
 ];
 

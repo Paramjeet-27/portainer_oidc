@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { createPublicKey, createVerify } from "node:crypto";
 
 const token = process.argv[2];

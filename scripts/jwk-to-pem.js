@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { createPublicKey } from "node:crypto";
 
 const port = process.env.PORT || 3000;

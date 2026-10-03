@@ -7,6 +7,7 @@ const port = Number(process.env.PORT) || 3000;
 export const config = {
   port,
   issuer: process.env.ISSUER || `http://localhost:${port}`,
+  apiResource: "http://abc.com/some_api",
   keysPath: path.join(root, "keys", "jwks.json"),
   usersPath: path.join(root, "data", "users.json"),
   clients: [
