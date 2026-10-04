@@ -24,3 +24,5 @@ required: () => true,
 > This is needed if PKCE is required, else, flow can work just without the PKCE, also this is a function, not just a simple boolean value, because we have have differnt flows for differnt type of clients, and we can manage it here. Like for some clients we have to keep it enabled, but others can just work without PKCE
 
 using "defaultResource" fills in the "resource" parameter in /auth. If its present, client does not need to send the "..&resouce=url" while calling /auth. But if its not present, passing the resource in auth is mandatory. Not passsing in auth and passing it in /token gives grant error. Not providing it in anything gives simple opaque token, but api:read will not be present in scope here.
+
+in this build only access token and id token is issues, refresh token is not issues becuase only authorization grant is enabled

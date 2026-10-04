@@ -20,10 +20,16 @@ const verify = (h, p, s) =>
     .update(`${h}.${p}`)
     .verify(publicKey, s, "base64url");
 
+console.log("\orignial token:");
+console.log(`${header}.${payload}.${signature}`);
+
 console.log("original token valid:", verify(header, payload, signature));
 
 const claims = JSON.parse(Buffer.from(payload, "base64url").toString());
 claims.sub = "admin";
 const forgedPayload = Buffer.from(JSON.stringify(claims)).toString("base64url");
+
+console.log("\nforged token:");
+console.log(`${header}.${forgedPayload}.${signature}`);
 
 console.log("tampered token valid:", verify(header, forgedPayload, signature));

@@ -15,17 +15,17 @@ const newKey = () => {
 };
 
 if (cmd === "add") {
-  keys.push(newKey()); // published, but NOT signing yet
+  keys.push(newKey()); // publish
 } else if (cmd === "promote") {
   const i = keys.findIndex((k) => k.kid === arg);
   if (i < 0) throw new Error("kid not found");
-  keys.unshift(...keys.splice(i, 1)); // move to front = becomes signing key
+  keys.unshift(...keys.splice(i, 1)); // move to top
 } else if (cmd === "retire") {
   if (keys[0].kid === arg)
     throw new Error("refusing to retire the signing key");
   const rest = keys.filter((k) => k.kid !== arg);
   if (rest.length === keys.length) throw new Error("kid not found");
-  keys.splice(0, keys.length, ...rest);
+  keys.splice(0, keys.length, ...rest); // remove
 } else if (cmd !== "list") {
   throw new Error("usage: add | promote <kid> | retire <kid> | list");
 }

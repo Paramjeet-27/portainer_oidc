@@ -27,7 +27,7 @@ Optional extras: PKCE (required for every request), UserInfo endpoint, tamper te
 git clone https://github.com/Paramjeet-27/portainer_oidc.git
 cd portainer_oidc
 npm install
-cp .env.example .env       # Windows PowerShell: Copy-Item .env.example .env
+cp .env.example .env
 npm run generate-keys  # creates keys/jwks.json (private, gitignored)
 npm run dev            # or: npm start
 ```
@@ -66,7 +66,7 @@ Tools used: a browser (or [oidcdebugger.com](https://oidcdebugger.com)) for `/au
 
 PKCE is required, so every authorize request needs a `code_challenge`.
 
-**1. Make a PKCE pair**
+**1. Make a PKCE pair (if not using OIDC Debugger)**
 
 ```bash
 node -e "import('node:crypto').then(({randomBytes,createHash})=>{const v=randomBytes(32).toString('base64url');console.log('verifier:',v);console.log('challenge:',createHash('sha256').update(v).digest('base64url'))})"
@@ -74,13 +74,13 @@ node -e "import('node:crypto').then(({randomBytes,createHash})=>{const v=randomB
 
 Keep the verifier. You need it at `/token`.
 
-**2. Authorize in the browser** (one line, replace `CLIENT_ID` and `CHALLENGE`)
+**2. Authorize in the browser** (replace `CLIENT_ID` and `CHALLENGE`)
 
 ```
-http://localhost:3001/auth?client_id=CLIENT_ID&response_type=code&redirect_uri=https://my-test-redirect.com&scope=openid%20email%20profile&code_challenge=CHALLENGE&code_challenge_method=S256&state=abc
+http://localhost:3001/auth?client_id=CLIENT_ID&response_type=code&redirect_uri=https://my-test-redirect.com&scope=openid%20email%20profile&code_challenge=CHALLENGE&code_challenge_method=S256&state=abc&nonce=xyz123
 ```
 
-Log in as one of the test users and continue on the consent screen. The browser is redirected to `https://my-test-redirect.com/?code=...&state=abc`. The page itself does not need to load. Copy the `code` value from the address bar.
+Log in as one of the test users and continue on the consent screen. The browser is redirected to `https://my-test-redirect.com/?code=...&state=abc&nonce=xyz123`. The page itself does not need to load. Copy the `code` value from the address bar.
 
 If the login screen is skipped, the provider is reusing the session cookie from an earlier login. Use a private window to switch users.
 
